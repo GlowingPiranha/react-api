@@ -20,6 +20,19 @@ function App() {
     });
   };
 
+  const fetchAll = async () => {
+    try {
+      const [actorsResp, actressesResp] = await Promise.all([
+        axios.get("https://lanciweb.github.io/demo/api/actors/"),
+        axios.get("https://lanciweb.github.io/demo/api/actresses/")
+      ]);
+
+      setPeople([...actorsResp.data, ...actressesResp.data]);
+    } catch (err) {
+      console.error("failed to load:", err)
+    }
+  };
+
   /* 
   id, name, birth_year, nationality, known_for
   */
@@ -30,7 +43,8 @@ function App() {
         <div className="row mb-3">
           <div className="col-12">
             <button className='btn btn-primary me-2' onClick={fetchActors}>Load Actors</button>
-            <button className='btn btn-primary' onClick={fetchActresses}>Load Actresses</button>
+            <button className='btn btn-primary me-2' onClick={fetchActresses}>Load Actresses</button>
+            <button className='btn btn-primary' onClick={fetchAll}>Load Both</button>
           </div>
           <div className="row g-3">
 
