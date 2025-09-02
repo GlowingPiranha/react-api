@@ -8,7 +8,8 @@ function App() {
 
   const fetchActors = () => {
     axios.get("https://lanciweb.github.io/demo/api/actors/").then((resp) => {
-      setActors(resp.data.results);
+      console.log(resp);
+      setActors(resp.data);
     });
   };
 
@@ -26,21 +27,32 @@ function App() {
           {actors.map((char) => {
             return (
 
-              <div className="col-12 col-md-6" key={char.id}>
-                <div className="d-flex">
-                  <img src={char.image} alt={char.name} />
-                  <div>
-                    <h4>{char.name}</h4>
-                    <div><span>{char.birth_year}</span></div>
+              <div className="col-12 col-md-4 mb-3" key={char.id}>
+
+                <div className="card h-100">
+
+                  <img className='card-img-top card-img-style' src={char.image} alt={char.name} />
+
+                  <div className="card-body d-flex flex-column">
+
+
+                    <h4 className='card-title'>{char.name}</h4>
+                    <p className='card-text mt-auto'>
+                      <div>Nato: {char.birth_year || "unknown"}</div>
+                      <div>Nazionalità: {char.nationality || "unknown"}</div>
+                      <div>Riconoscimenti: {char.known_for ? char.known_for.join(", ") : "N/A"}</div>
+                    </p>
                   </div>
                 </div>
               </div>
+
+
 
             );
 
           })}
         </div>
-      </div>
+      </div >
     </>
   )
 }
